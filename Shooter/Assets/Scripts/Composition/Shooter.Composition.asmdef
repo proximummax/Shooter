@@ -1,0 +1,21 @@
+{
+  "name": "Shooter.Composition",
+  "rootNamespace": "Shooter",
+  "references": [
+    "Shooter.Core",
+    "Shooter.Combat",
+    "Shooter.Gameplay",
+    "Shooter.UI",
+    "VContainer",
+    "VContainer.Unity"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
