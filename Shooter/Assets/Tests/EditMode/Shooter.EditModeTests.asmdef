@@ -1,0 +1,31 @@
+{
+  "name": "Shooter.EditModeTests",
+  "rootNamespace": "Shooter.Tests",
+  "references": [
+    "Shooter.Core",
+    "Shooter.Combat",
+    "Shooter.Gameplay",
+    "Shooter.UI",
+    "Shooter.Composition",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI",
+    "VContainer",
+    "VContainer.Unity"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "noEngineReferences": false
+}
