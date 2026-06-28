@@ -1,0 +1,30 @@
+# Unity generated folders
+Shooter/[Ll]ibrary/
+Shooter/[Tt]emp/
+Shooter/[Oo]bj/
+Shooter/[Bb]uild/
+Shooter/[Bb]uilds/
+Shooter/[Ll]ogs/
+Shooter/[Uu]ser[Ss]ettings/
+
+# Unity generated files
+Shooter/*.csproj
+Shooter/*.sln
+Shooter/*.user
+Shooter/*.pidb
+Shooter/*.booproj
+Shooter/*.svd
+Shooter/*.pdb
+Shooter/*.mdb
+Shooter/*.opendb
+Shooter/*.VC.db
+Shooter/*.pidb.meta
+Shooter/*.pdb.meta
+Shooter/*.mdb.meta
+Shooter/*.idea
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vs/
+.vscode/
