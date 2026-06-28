@@ -1,0 +1,19 @@
+{
+  "name": "Shooter.Gameplay",
+  "rootNamespace": "Shooter",
+  "references": [
+    "Shooter.Core",
+    "Shooter.Combat",
+    "UnityEngine.UI",
+    "VContainer"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
