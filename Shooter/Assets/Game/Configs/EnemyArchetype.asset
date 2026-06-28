@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f08bf578d2c4541b0de080ca6ce7090, type: 3}
+  m_Name: EnemyArchetype
+  m_EditorClassIdentifier: 
+  _id: arena-drone
+  _enemyPrefab: {fileID: 7238618772882122835, guid: 7f65c94054fefbb48939a7d4ede23ac6, type: 3}
+  _stats: {fileID: 11400000, guid: bbbbbbbbbbbbbbbbbbbbbbbbbbbbb004, type: 2}
+  _poolPrewarmCount: 5

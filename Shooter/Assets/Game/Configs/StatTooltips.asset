@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaaaaaaaaaaaaaaaaaaaaaaaaaaaa004, type: 3}
+  m_Name: StatTooltips
+  m_EditorClassIdentifier: 
+  _entries:
+  - _id: health
+    _text: Health is driven by HealthComponent and receives all incoming damage through DamagePipeline.
+  - _id: basic-shot
+    _text: 'Basic attack config comes from AbilityDefinition: damage, range and cooldown are data-driven.'
+  - _id: aoe-impulse
+    _text: Active ability config comes from AbilityDefinition and applies area damage to targets inside radius.

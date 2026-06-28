@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaaaaaaaaaaaaaaaaaaaaaaaaaaaa001, type: 3}
+  m_Name: Dash
+  m_EditorClassIdentifier: 
+  _id: dash
+  _displayName: Dash
+  _description: 'Shift: performs a short movement burst in the current movement direction.'
+  _cooldown: 2
+  _effect: {fileID: 11400000, guid: 3d91b35fbe85493aaed891c7e8c2d903, type: 2}
+  _icon: {fileID: 0}

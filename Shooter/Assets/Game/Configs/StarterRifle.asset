@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 290e9cd085fb4d65ad6c58d5f9141df1, type: 3}
+  m_Name: StarterRifle
+  m_EditorClassIdentifier: 
+  _id: starter-rifle
+  _displayName: Starter Rifle
+  _abilitySlots:
+  - _slotId: 0
+    _ability: {fileID: 11400000, guid: bbbbbbbbbbbbbbbbbbbbbbbbbbbbb005, type: 2}
+  - _slotId: 1
+    _ability: {fileID: 11400000, guid: bbbbbbbbbbbbbbbbbbbbbbbbbbbbb006, type: 2}
+  - _slotId: 2
+    _ability: {fileID: 11400000, guid: 4d91b35fbe85493aaed891c7e8c2d904, type: 2}
