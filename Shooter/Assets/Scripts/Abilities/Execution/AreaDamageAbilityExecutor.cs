@@ -4,19 +4,18 @@ namespace Shooter.Abilities
 {
     public sealed class AreaDamageAbilityExecutor : IAbilityExecutor
     {
-        private readonly IDamagePipelineProvider _damagePipelineProvider;
+        private readonly ICombatEffectService _combatEffects;
 
-        public AreaDamageAbilityExecutor(IDamagePipelineProvider damagePipelineProvider)
+        public AreaDamageAbilityExecutor(ICombatEffectService combatEffects)
         {
-            _damagePipelineProvider = damagePipelineProvider;
+            _combatEffects = combatEffects;
         }
 
         public AbilityType AbilityType => AbilityType.AreaDamage;
 
         public void Execute(AbilityDefinition ability, AbilityUseContext context, int damageLayerMask)
         {
-            DamagePipeline pipeline = _damagePipelineProvider != null ? _damagePipelineProvider.Combat : DamagePipeline.Default;
-            new AreaDamageAbility(ability, pipeline, damageLayerMask).Execute(context);
+            new AreaDamageAbility(ability, _combatEffects, damageLayerMask).Execute(context);
         }
     }
 }

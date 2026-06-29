@@ -1,5 +1,6 @@
 using System;
 using Shooter.Abilities;
+using Shooter.Combat;
 using Shooter.Effects;
 using UnityEngine;
 
@@ -23,13 +24,14 @@ namespace Shooter.Projectiles
             Vector3 direction,
             int damageLayerMask,
             Action<Projectile> release,
-            IHitParticleFactory hitParticleFactory)
+            IHitParticleFactory hitParticleFactory,
+            ICombatEffectService combatEffects)
         {
             _effect = effect;
             _direction = direction.sqrMagnitude <= 0.001f ? Vector3.forward : direction.normalized;
             _travelledDistance = 0f;
             _release = release;
-            _impactResolver = new ProjectileImpactResolver(effect, projectileDefinition, source, damageLayerMask, hitParticleFactory);
+            _impactResolver = new ProjectileImpactResolver(effect, projectileDefinition, source, damageLayerMask, hitParticleFactory, combatEffects);
             _isInitialized = true;
             _isReleased = false;
 

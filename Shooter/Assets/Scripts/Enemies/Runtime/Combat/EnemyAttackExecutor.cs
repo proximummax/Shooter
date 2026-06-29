@@ -6,7 +6,13 @@ namespace Shooter.Enemies
 {
     public sealed class EnemyAttackExecutor
     {
+        private readonly ICombatEffectService _combatEffects;
         private float _nextAttackTime;
+
+        public EnemyAttackExecutor(ICombatEffectService combatEffects = null)
+        {
+            _combatEffects = combatEffects ?? new CombatEffectService();
+        }
 
         public void Reset()
         {
@@ -21,18 +27,8 @@ namespace Shooter.Enemies
             }
 
             _nextAttackTime = now + stats.AttackCooldown;
-            HealthComponent targetHealth = target.GetComponent<HealthComponent>();
-            if (targetHealth == null || targetHealth.IsDead)
-            {
-                return false;
-            }
-
-            targetHealth.ApplyDamage(new DamageRequest(
-                baseAmount: stats.AttackDamage,
-                damageType: DamageType.Enemy,
-                source: source,
-                target: targetHealth));
-            return true;
+            var intent = new DamageIntent(stats.AttackDamage, DamageType.Enemy, source);
+            return _combatEffects.TryApplyDamageToTarget(intent, target, out _);
         }
     }
 }

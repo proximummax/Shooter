@@ -35,7 +35,7 @@ namespace Shooter.Tests.Abilities
             try
             {
                 Physics.SyncTransforms();
-                loadout.ConfigureExecutors(null, new StandardDamagePipelineProvider());
+                loadout.ConfigureExecutors(null, new CombatEffectService());
                 loadout.Initialize(loadoutDefinition, Physics.DefaultRaycastLayers);
 
                 bool firstUse = loadout.TryUse(AbilitySlotId.Primary, new AbilityUseContext(caster.transform, Vector3.forward, 0f));
@@ -77,7 +77,7 @@ namespace Shooter.Tests.Abilities
 
             try
             {
-                loadout.ConfigureExecutors(null, new StandardDamagePipelineProvider());
+                loadout.ConfigureExecutors(null, new CombatEffectService());
                 loadout.Initialize(loadoutDefinition, Physics.DefaultRaycastLayers);
 
                 bool used = loadout.TryUse(

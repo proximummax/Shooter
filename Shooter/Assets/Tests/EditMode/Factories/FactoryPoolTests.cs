@@ -44,7 +44,7 @@ namespace Shooter.Tests.Factories
                     cooldown: 0.2f,
                     effect);
                 var hitFactory = new HitParticleFactory(particlesParent);
-                var factory = new ProjectileFactory(parent, hitFactory);
+                var factory = new ProjectileFactory(parent, hitFactory, new CombatEffectService());
 
                 Projectile first = factory.Create(definition, source, Vector3.forward, ~0, Vector3.zero);
                 first.Release();
@@ -108,7 +108,7 @@ namespace Shooter.Tests.Factories
                     "Projectile.",
                     cooldown: 0.2f,
                     secondEffect);
-                var factory = new ProjectileFactory(parent, new HitParticleFactory(particlesParent));
+                var factory = new ProjectileFactory(parent, new HitParticleFactory(particlesParent), new CombatEffectService());
 
                 Projectile first = factory.Create(firstAbility, source, Vector3.forward, ~0, Vector3.zero);
                 Projectile second = factory.Create(secondAbility, source, Vector3.forward, ~0, Vector3.one);
@@ -153,7 +153,8 @@ namespace Shooter.Tests.Factories
                 var runtimeContext = new EnemyRuntimeContext(
                     target.transform,
                     new GameSessionStateStore(),
-                    new StandardDamagePipelineProvider());
+                    new StandardDamagePipelineProvider(),
+                    new CombatEffectService());
                 var factory = new EnemyFactory(
                     parent,
                     registry,

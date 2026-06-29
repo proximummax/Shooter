@@ -12,40 +12,37 @@ namespace Shooter.Projectiles
         private readonly GameObject _source;
         private readonly int _damageLayerMask;
         private readonly IHitParticleFactory _hitParticleFactory;
+        private readonly ICombatEffectService _combatEffects;
 
         public ProjectileImpactResolver(
             ProjectileAbilityEffectDefinition effect,
             ProjectileDefinition projectile,
             GameObject source,
             int damageLayerMask,
-            IHitParticleFactory hitParticleFactory)
+            IHitParticleFactory hitParticleFactory,
+            ICombatEffectService combatEffects)
         {
             _effect = effect;
             _projectile = projectile;
             _source = source;
             _damageLayerMask = damageLayerMask;
             _hitParticleFactory = hitParticleFactory;
+            _combatEffects = combatEffects ?? new CombatEffectService();
         }
 
         public bool TryResolve(ProjectileImpactContext context)
         {
             Collider other = context.Collider;
-            if (_effect == null || other == null || other.gameObject == _source || ((_damageLayerMask & (1 << other.gameObject.layer)) == 0))
+            if (_effect == null || other == null)
             {
                 return false;
             }
 
-            HealthComponent health = other.GetComponentInParent<HealthComponent>();
-            if (health == null || health.IsDead || health.gameObject == _source)
+            var intent = new DamageIntent(_effect.Damage, _effect.DamageType, _source);
+            if (!_combatEffects.TryApplyDamageToHit(intent, other, _damageLayerMask, out _))
             {
                 return false;
             }
-
-            health.ApplyDamage(new DamageRequest(
-                baseAmount: _effect.Damage,
-                damageType: _effect.DamageType,
-                source: _source,
-                target: health));
 
             _hitParticleFactory?.Play(_projectile != null ? _projectile.HitParticlePrefab : null, context.Position, context.Normal);
             return true;

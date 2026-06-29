@@ -29,10 +29,10 @@ namespace Shooter.Abilities
         }
 
         [Inject]
-        public void Construct(IProjectileFactory projectileFactory, IDamagePipelineProvider damagePipelineProvider)
+        public void Construct(IProjectileFactory projectileFactory, ICombatEffectService combatEffects)
         {
             BindLoadoutEvents();
-            _loadout.ConfigureExecutors(projectileFactory, damagePipelineProvider);
+            _loadout.ConfigureExecutors(projectileFactory, combatEffects);
         }
 
         private void BindLoadoutEvents()

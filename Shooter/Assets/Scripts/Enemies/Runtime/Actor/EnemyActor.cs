@@ -38,12 +38,17 @@ namespace Shooter.Enemies
             }
         }
 
-        public void Initialize(Transform target, CharacterStatsDefinition stats, IGameSessionStateReader sessionState)
+        public void Initialize(
+            Transform target,
+            CharacterStatsDefinition stats,
+            IGameSessionStateReader sessionState,
+            ICombatEffectService combatEffects)
         {
             _target = target;
             _stats = stats;
             _sessionState = sessionState;
             _behavior.Reset();
+            _attackExecutor = new EnemyAttackExecutor(combatEffects);
             _attackExecutor.Reset();
             _presenter.Restore();
             enabled = true;

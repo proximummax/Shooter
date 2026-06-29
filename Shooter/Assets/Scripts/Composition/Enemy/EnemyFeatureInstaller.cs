@@ -29,6 +29,7 @@ namespace Shooter.Composition
                             player.Transform,
                             resolver.Resolve<IGameSessionStateReader>(),
                             resolver.Resolve<IDamagePipelineProvider>(),
+                            resolver.Resolve<ICombatEffectService>(),
                             player.GameplayCamera);
                     },
                     Lifetime.Singleton)

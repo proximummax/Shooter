@@ -10,7 +10,7 @@ namespace Shooter.Tests.Enemies
     public sealed class EnemyAttackExecutorTests
     {
         [Test]
-        public void TryAttack_AppliesDamageThroughTargetHealthAndRespectsCooldown()
+        public void TryAttack_DelegatesDamageToCombatEffectServiceAndRespectsCooldown()
         {
             GameObject source = new GameObject("enemy");
             GameObject target = new GameObject("player");
@@ -24,7 +24,8 @@ namespace Shooter.Tests.Enemies
                 1f,
                 4f,
                 1f);
-            var executor = new EnemyAttackExecutor();
+            var combatEffects = new RecordingCombatEffectService();
+            var executor = new EnemyAttackExecutor(combatEffects);
 
             try
             {
@@ -35,13 +36,51 @@ namespace Shooter.Tests.Enemies
                 Assert.That(firstAttack, Is.True);
                 Assert.That(cooldownAttack, Is.False);
                 Assert.That(secondAttack, Is.True);
-                Assert.That(health.CurrentHealth, Is.EqualTo(12f));
+                Assert.That(combatEffects.CallCount, Is.EqualTo(2));
+                Assert.That(combatEffects.LastIntent.BaseAmount, Is.EqualTo(4f));
+                Assert.That(combatEffects.LastIntent.DamageType, Is.EqualTo(DamageType.Enemy));
+                Assert.That(combatEffects.LastIntent.Source, Is.EqualTo(source));
+                Assert.That(combatEffects.LastTarget, Is.EqualTo(target.transform));
             }
             finally
             {
                 Object.DestroyImmediate(source);
                 Object.DestroyImmediate(target);
                 Object.DestroyImmediate(stats);
+            }
+        }
+
+        private sealed class RecordingCombatEffectService : ICombatEffectService
+        {
+            public int CallCount { get; private set; }
+            public DamageIntent LastIntent { get; private set; }
+            public Transform LastTarget { get; private set; }
+
+            public DamageResult ApplyDamage(DamageIntent intent, IDamageable target)
+            {
+                CallCount++;
+                LastIntent = intent;
+                return new DamageResult(intent.BaseAmount, intent.BaseAmount, false, System.Array.Empty<string>());
+            }
+
+            public bool TryApplyDamageToHit(DamageIntent intent, Collider hitCollider, int layerMask, out DamageResult result)
+            {
+                result = ApplyDamage(intent, null);
+                return true;
+            }
+
+            public bool TryApplyDamageToTarget(DamageIntent intent, Transform target, out DamageResult result)
+            {
+                CallCount++;
+                LastIntent = intent;
+                LastTarget = target;
+                result = new DamageResult(intent.BaseAmount, intent.BaseAmount, false, System.Array.Empty<string>());
+                return true;
+            }
+
+            public int ApplyAreaDamage(AreaDamageIntent intent)
+            {
+                return 0;
             }
         }
     }

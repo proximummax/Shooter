@@ -26,9 +26,9 @@ namespace Shooter.Abilities
             EnsureInitialized(force: true);
         }
 
-        public void ConfigureExecutors(IProjectileFactory projectileFactory, IDamagePipelineProvider damagePipelineProvider)
+        public void ConfigureExecutors(IProjectileFactory projectileFactory, ICombatEffectService combatEffects)
         {
-            _executorRegistry = CreateExecutorRegistry(projectileFactory, damagePipelineProvider);
+            _executorRegistry = CreateExecutorRegistry(projectileFactory, combatEffects);
             EnsureInitialized(force: true);
         }
 
@@ -56,7 +56,7 @@ namespace Shooter.Abilities
                 return false;
             }
 
-            (_executorRegistry ??= CreateExecutorRegistry(null, new StandardDamagePipelineProvider())).Execute(
+            (_executorRegistry ??= CreateExecutorRegistry(null, new CombatEffectService())).Execute(
                 slot.Ability,
                 context,
                 _damageLayerMask);
@@ -103,12 +103,12 @@ namespace Shooter.Abilities
 
         private static AbilityExecutorRegistry CreateExecutorRegistry(
             IProjectileFactory projectileFactory,
-            IDamagePipelineProvider damagePipelineProvider)
+            ICombatEffectService combatEffects)
         {
             return new AbilityExecutorRegistry(new IAbilityExecutor[]
             {
                 new ProjectileAbilityExecutor(projectileFactory),
-                new AreaDamageAbilityExecutor(damagePipelineProvider),
+                new AreaDamageAbilityExecutor(combatEffects),
                 new DashAbilityExecutor()
             });
         }

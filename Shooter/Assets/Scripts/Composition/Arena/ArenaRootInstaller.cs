@@ -14,12 +14,14 @@ namespace Shooter.Composition
             var pauseService = new TimeScalePauseService();
             var restartService = new SceneRestartService();
             var damagePipelines = new StandardDamagePipelineProvider();
+            var combatEffects = new CombatEffectService();
 
             builder.RegisterInstance(stateStore).AsSelf().As<IGameSessionStateReader>();
             builder.RegisterInstance(enemyRegistry);
             builder.RegisterInstance<IGameplayPauseService>(pauseService);
             builder.RegisterInstance<IGameRestartService>(restartService);
             builder.RegisterInstance<IDamagePipelineProvider>(damagePipelines);
+            builder.RegisterInstance<ICombatEffectService>(combatEffects);
         }
     }
 }

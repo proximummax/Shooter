@@ -38,7 +38,7 @@ namespace Shooter.Enemies
             RestorePresentation();
 
             Health.Initialize(stats, runtimeContext.DamagePipeline);
-            _actor.Initialize(runtimeContext.Target, stats, runtimeContext.SessionState);
+            _actor.Initialize(runtimeContext.Target, stats, runtimeContext.SessionState, runtimeContext.CombatEffects);
 
             WorldHealthBar healthBar = GetComponentInChildren<WorldHealthBar>(true);
             if (healthBar != null)

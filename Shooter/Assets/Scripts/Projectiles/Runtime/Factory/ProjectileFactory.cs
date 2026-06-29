@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Shooter.Abilities;
+using Shooter.Combat;
 using Shooter.Effects;
 using Shooter.Shared;
 using UnityEngine;
@@ -11,13 +12,15 @@ namespace Shooter.Projectiles
     {
         private readonly Transform _parent;
         private readonly IHitParticleFactory _hitParticleFactory;
+        private readonly ICombatEffectService _combatEffects;
         private readonly Dictionary<ProjectileDefinition, ComponentPool<Projectile>> _pools = new Dictionary<ProjectileDefinition, ComponentPool<Projectile>>();
         private readonly Dictionary<Projectile, ComponentPool<Projectile>> _activePools = new Dictionary<Projectile, ComponentPool<Projectile>>();
 
-        public ProjectileFactory(Transform parent, IHitParticleFactory hitParticleFactory)
+        public ProjectileFactory(Transform parent, IHitParticleFactory hitParticleFactory, ICombatEffectService combatEffects)
         {
             _parent = parent;
             _hitParticleFactory = hitParticleFactory;
+            _combatEffects = combatEffects ?? new CombatEffectService();
         }
 
         public Projectile Create(
@@ -43,7 +46,7 @@ namespace Shooter.Projectiles
             projectile.transform.rotation = direction.sqrMagnitude <= 0.001f
                 ? Quaternion.identity
                 : Quaternion.LookRotation(direction.normalized);
-            projectile.Initialize(effect, projectileDefinition, source, direction, damageLayerMask, Release, _hitParticleFactory);
+            projectile.Initialize(effect, projectileDefinition, source, direction, damageLayerMask, Release, _hitParticleFactory, _combatEffects);
             return projectile;
         }
 

@@ -11,17 +11,20 @@ namespace Shooter.Enemies
             Transform target,
             IGameSessionStateReader sessionState,
             IDamagePipelineProvider damagePipelineProvider,
+            ICombatEffectService combatEffects,
             Camera worldUiCamera = null)
         {
             Target = target != null ? target : throw new ArgumentNullException(nameof(target));
             SessionState = sessionState != null ? sessionState : throw new ArgumentNullException(nameof(sessionState));
             DamagePipelineProvider = damagePipelineProvider ?? new StandardDamagePipelineProvider();
+            CombatEffects = combatEffects ?? new CombatEffectService();
             WorldUiCamera = worldUiCamera;
         }
 
         public Transform Target { get; }
         public IGameSessionStateReader SessionState { get; }
         public IDamagePipelineProvider DamagePipelineProvider { get; }
+        public ICombatEffectService CombatEffects { get; }
         public Camera WorldUiCamera { get; }
         public DamagePipeline DamagePipeline => DamagePipelineProvider.Combat;
     }

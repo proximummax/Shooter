@@ -37,14 +37,19 @@ namespace Shooter.Composition
         public void Install(IContainerBuilder builder)
         {
             var hitParticleFactory = new HitParticleFactory(_particlesParent);
-            var projectileFactory = new ProjectileFactory(_projectilesParent, hitParticleFactory);
 
             builder.RegisterInstance(_player);
             builder.RegisterInstance(_player.Health);
             builder.RegisterComponent(_player.Abilities);
             builder.RegisterInstance<IPlayerInputSource>(_player.InputSource);
             builder.RegisterInstance<IHitParticleFactory>(hitParticleFactory);
-            builder.RegisterInstance<IProjectileFactory>(projectileFactory);
+            builder.Register<ProjectileFactory>(
+                    resolver => new ProjectileFactory(
+                        _projectilesParent,
+                        hitParticleFactory,
+                        resolver.Resolve<ICombatEffectService>()),
+                    Lifetime.Singleton)
+                .As<IProjectileFactory>();
 
             builder.Register<PlayerRuntimeBinder>(
                     resolver => new PlayerRuntimeBinder(

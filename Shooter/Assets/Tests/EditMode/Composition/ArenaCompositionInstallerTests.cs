@@ -27,6 +27,7 @@ namespace Shooter.Tests.Composition
                 Assert.DoesNotThrow(() => resolver.Resolve<IGameplayPauseService>());
                 Assert.DoesNotThrow(() => resolver.Resolve<IGameRestartService>());
                 Assert.DoesNotThrow(() => resolver.Resolve<IDamagePipelineProvider>());
+                Assert.DoesNotThrow(() => resolver.Resolve<ICombatEffectService>());
             }
             finally
             {
