@@ -31,10 +31,6 @@ Responsibilities are split by use case. ScriptableObjects define tunable content
 * Runtime Validation: Scene references and content definitions are checked during composition to fail early with actionable errors.
 * Testable Domain Logic: EditMode tests cover ability cooldowns and loadouts, damage pipelines, health behavior, enemy behavior, projectile impact resolution, pooling, session flow, runtime validation, and composition wiring.
 
-## Notes
-
-The implementation intentionally favors maintainability, explicit dependencies, and simplicity over unnecessary architectural complexity. Patterns such as a global Event Bus, Service Locator, or excessive abstraction were avoided because they do not provide meaningful value for a project of this scope and would make the assignment harder to review without improving the runtime design.
-
 # Русский
 
 ## Проект
@@ -59,7 +55,3 @@ The implementation intentionally favors maintainability, explicit dependencies, 
 * Explicit Ownership: factories владеют созданием pooled projectiles, enemies и hit effects, поэтому вызывающий код не управляет prefab setup или release rules.
 * Runtime Validation: scene references и content definitions проверяются во время композиции, чтобы ошибки проявлялись рано и были понятными.
 * Testable Domain Logic: EditMode-тесты покрывают ability cooldowns и loadouts, damage pipelines, health behavior, enemy behavior, projectile impact resolution, pooling, session flow, runtime validation и composition wiring.
-
-## Заметки
-
-Реализация намеренно отдает приоритет maintainability, explicit dependencies и simplicity вместо лишней архитектурной сложности. Глобальный Event Bus, Service Locator и чрезмерные абстракции были осознанно исключены, потому что для проекта такого масштаба они не дают существенной пользы и усложнили бы ревью без улучшения runtime design.
