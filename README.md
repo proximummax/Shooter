@@ -14,7 +14,7 @@ This Unity project is a compact gameplay implementation for a technical assessme
 
 ## Architectural Approach
 
-The project uses a feature-oriented structure with separate areas for combat, abilities, player logic, enemies, projectiles, arena/session flow, UI, loading, shared utilities, and composition. The structure is intentionally practical rather than framework-heavy: feature code owns behavior, while the composition layer wires scene references, runtime services, factories, presenters, and shared state.
+The project uses a feature-oriented structure with separate areas for combat, abilities, player logic, enemies, projectiles, arena/session flow, UI, loading, shared utilities, and composition.
 
 Dependencies are managed through VContainer. The arena root registers shared services, and smaller feature lifetime scopes install player, enemy, session, and UI dependencies. Runtime binders connect validated Unity references to the registered services after the container is built. This keeps initialization explicit and avoids hidden scene lookups.
 
@@ -42,7 +42,7 @@ The implementation intentionally favors maintainability, explicit dependencies, 
 
 ## Архитектурный подход
 
-Проект использует feature-oriented структуру с отдельными областями для combat, abilities, player logic, enemies, projectiles, arena/session flow, UI, loading, shared utilities и composition. Структура намеренно практичная, а не framework-heavy: feature-код владеет поведением, а composition layer связывает scene references, runtime services, factories, presenters и общее состояние.
+Проект использует feature-oriented структуру с отдельными областями для combat, abilities, player logic, enemies, projectiles, arena/session flow, UI, loading, shared utilities и composition.
 
 Зависимости управляются через VContainer. Arena root регистрирует общие сервисы, а меньшие feature lifetime scopes устанавливают зависимости player, enemy, session и UI. Runtime binders подключают проверенные Unity references к зарегистрированным сервисам после сборки контейнера. Это делает инициализацию явной и избегает скрытых scene lookups.
 
