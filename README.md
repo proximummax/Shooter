@@ -25,6 +25,7 @@ Responsibilities are split by use case. ScriptableObjects define tunable content
 * Dependency Injection: VContainer is used to make runtime dependencies explicit and keep object graph creation in the composition layer.
 * Assembly Definitions: `Core`, `Combat`, `Gameplay`, `UI`, and `Composition` assemblies define dependency direction and reduce accidental coupling.
 * Composition over Inheritance: Gameplay systems are built from focused components, executors, presenters, factories, and definitions instead of deep base-class hierarchies.
+* MVP-style Presentation: UI and session-facing flows use presenters to keep Unity views thin and move state decisions, subscriptions, and coordination into testable classes.
 * ScriptableObject Configuration: Gameplay content is data-driven so tuning can change independently of runtime behavior.
 * Explicit Ownership: Factories own pooled projectile, enemy, and hit-effect creation so callers do not manage prefab setup or release rules.
 * Runtime Validation: Scene references and content definitions are checked during composition to fail early with actionable errors.
@@ -53,6 +54,7 @@ The implementation intentionally favors maintainability, explicit dependencies, 
 * Dependency Injection: VContainer делает runtime-зависимости явными и удерживает создание object graph в composition layer.
 * Assembly Definitions: сборки `Core`, `Combat`, `Gameplay`, `UI` и `Composition` задают направление зависимостей и снижают случайную связность.
 * Composition over Inheritance: gameplay systems собираются из focused components, executors, presenters, factories и definitions вместо глубоких base-class hierarchies.
+* MVP-style Presentation: UI и session-facing flow используют presenters, чтобы Unity views оставались тонкими, а решения по состоянию, подпискам и координации находились в тестируемых классах.
 * ScriptableObject Configuration: gameplay content остается data-driven, поэтому tuning можно менять независимо от runtime behavior.
 * Explicit Ownership: factories владеют созданием pooled projectiles, enemies и hit effects, поэтому вызывающий код не управляет prefab setup или release rules.
 * Runtime Validation: scene references и content definitions проверяются во время композиции, чтобы ошибки проявлялись рано и были понятными.
