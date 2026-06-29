@@ -8,7 +8,7 @@ namespace Shooter.Projectiles
     [RequireComponent(typeof(Collider))]
     public sealed class Projectile : MonoBehaviour
     {
-        private AbilityDefinition _definition;
+        private ProjectileAbilityEffectDefinition _effect;
         private Vector3 _direction;
         private float _travelledDistance;
         private bool _isInitialized;
@@ -17,7 +17,7 @@ namespace Shooter.Projectiles
         private ProjectileImpactResolver _impactResolver;
 
         public void Initialize(
-            AbilityDefinition definition,
+            ProjectileAbilityEffectDefinition effect,
             ProjectileDefinition projectileDefinition,
             GameObject source,
             Vector3 direction,
@@ -25,11 +25,11 @@ namespace Shooter.Projectiles
             Action<Projectile> release,
             IHitParticleFactory hitParticleFactory)
         {
-            _definition = definition;
+            _effect = effect;
             _direction = direction.sqrMagnitude <= 0.001f ? Vector3.forward : direction.normalized;
             _travelledDistance = 0f;
             _release = release;
-            _impactResolver = new ProjectileImpactResolver(definition, projectileDefinition, source, damageLayerMask, hitParticleFactory);
+            _impactResolver = new ProjectileImpactResolver(effect, projectileDefinition, source, damageLayerMask, hitParticleFactory);
             _isInitialized = true;
             _isReleased = false;
 
@@ -53,11 +53,11 @@ namespace Shooter.Projectiles
                 return;
             }
 
-            float step = _definition.ProjectileSpeed * Time.deltaTime;
+            float step = _effect.ProjectileSpeed * Time.deltaTime;
             transform.position += _direction * step;
             _travelledDistance += step;
 
-            if (_travelledDistance >= _definition.Range)
+            if (_travelledDistance >= _effect.Range)
             {
                 Release();
             }
@@ -86,6 +86,7 @@ namespace Shooter.Projectiles
 
             _isReleased = true;
             _isInitialized = false;
+            _effect = null;
             _impactResolver = null;
 
             if (_release != null)

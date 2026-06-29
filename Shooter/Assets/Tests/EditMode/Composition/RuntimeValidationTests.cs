@@ -15,17 +15,17 @@ namespace Shooter.Tests.Composition
         [Test]
         public void RuntimeContentValidator_RejectsProjectileAbilityWithoutProjectileDefinition()
         {
+            ProjectileAbilityEffectDefinition effect = ProjectileAbilityEffectDefinition.CreateRuntime(
+                DamageType.Basic,
+                damage: 10f,
+                range: 10f,
+                projectileSpeed: 8f);
             AbilityDefinition ability = AbilityDefinition.CreateRuntime(
                 "shot",
                 "Shot",
                 "Projectile attack.",
-                AbilityType.Projectile,
-                DamageType.Basic,
-                10f,
-                0.2f,
-                10f,
-                0f,
-                8f);
+                cooldown: 0.2f,
+                effect);
             WeaponDefinition weapon = WeaponDefinition.CreateRuntime(
                 "starter",
                 "Starter",

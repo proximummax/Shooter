@@ -27,7 +27,10 @@ namespace Shooter.Projectiles
             int damageLayerMask,
             Vector3 spawnPosition)
         {
-            ProjectileDefinition projectileDefinition = definition != null ? definition.Projectile : null;
+            ProjectileAbilityEffectDefinition effect = definition != null
+                ? definition.GetEffect<ProjectileAbilityEffectDefinition>()
+                : null;
+            ProjectileDefinition projectileDefinition = effect != null ? effect.Projectile : null;
             if (projectileDefinition == null)
             {
                 throw new InvalidOperationException($"{nameof(AbilityDefinition)} '{definition?.Id}' has no {nameof(ProjectileDefinition)}.");
@@ -40,7 +43,7 @@ namespace Shooter.Projectiles
             projectile.transform.rotation = direction.sqrMagnitude <= 0.001f
                 ? Quaternion.identity
                 : Quaternion.LookRotation(direction.normalized);
-            projectile.Initialize(definition, projectileDefinition, source, direction, damageLayerMask, Release, _hitParticleFactory);
+            projectile.Initialize(effect, projectileDefinition, source, direction, damageLayerMask, Release, _hitParticleFactory);
             return projectile;
         }
 
@@ -55,26 +58,26 @@ namespace Shooter.Projectiles
             pool.Release(projectile);
         }
 
-        private ComponentPool<Projectile> GetPool(ProjectileDefinition definition)
+        private ComponentPool<Projectile> GetPool(ProjectileDefinition projectileDefinition)
         {
-            if (_pools.TryGetValue(definition, out ComponentPool<Projectile> pool))
+            if (_pools.TryGetValue(projectileDefinition, out ComponentPool<Projectile> pool))
             {
                 return pool;
             }
 
-            if (definition.ProjectilePrefab == null)
+            if (projectileDefinition.ProjectilePrefab == null)
             {
-                throw new InvalidOperationException($"{nameof(ProjectileDefinition)} '{definition.Id}' has no projectile prefab.");
+                throw new InvalidOperationException($"{nameof(ProjectileDefinition)} '{projectileDefinition.Id}' has no projectile prefab.");
             }
 
-            Projectile projectile = definition.ProjectilePrefab.GetComponent<Projectile>();
+            Projectile projectile = projectileDefinition.ProjectilePrefab.GetComponent<Projectile>();
             if (projectile == null)
             {
-                throw new InvalidOperationException($"{nameof(ProjectileDefinition)} '{definition.Id}' prefab must contain {nameof(Projectile)}.");
+                throw new InvalidOperationException($"{nameof(ProjectileDefinition)} '{projectileDefinition.Id}' prefab must contain {nameof(Projectile)}.");
             }
 
-            pool = new ComponentPool<Projectile>(projectile, _parent, definition.PoolPrewarmCount);
-            _pools.Add(definition, pool);
+            pool = new ComponentPool<Projectile>(projectile, _parent, projectileDefinition.PoolPrewarmCount);
+            _pools.Add(projectileDefinition, pool);
             return pool;
         }
     }

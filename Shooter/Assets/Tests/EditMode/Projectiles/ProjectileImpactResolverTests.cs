@@ -16,18 +16,12 @@ namespace Shooter.Tests.Projectiles
             GameObject target = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             HealthComponent health = target.AddComponent<HealthComponent>();
             health.Initialize(20f, 0f, DamagePipeline.Default);
-            AbilityDefinition ability = AbilityDefinition.CreateRuntime(
-                "shot",
-                "Shot",
-                "Projectile shot.",
-                AbilityType.Projectile,
+            ProjectileAbilityEffectDefinition effect = ProjectileAbilityEffectDefinition.CreateRuntime(
                 DamageType.Basic,
-                7f,
-                0.2f,
-                10f,
-                0f,
-                8f);
-            var resolver = new ProjectileImpactResolver(ability, null, source, ~0, null);
+                damage: 7f,
+                range: 10f,
+                projectileSpeed: 8f);
+            var resolver = new ProjectileImpactResolver(effect, null, source, ~0, null);
 
             try
             {
@@ -43,7 +37,7 @@ namespace Shooter.Tests.Projectiles
             {
                 Object.DestroyImmediate(source);
                 Object.DestroyImmediate(target);
-                Object.DestroyImmediate(ability);
+                Object.DestroyImmediate(effect);
             }
         }
 
@@ -51,18 +45,12 @@ namespace Shooter.Tests.Projectiles
         public void TryResolve_IgnoresSourceCollider()
         {
             GameObject source = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-            AbilityDefinition ability = AbilityDefinition.CreateRuntime(
-                "shot",
-                "Shot",
-                "Projectile shot.",
-                AbilityType.Projectile,
+            ProjectileAbilityEffectDefinition effect = ProjectileAbilityEffectDefinition.CreateRuntime(
                 DamageType.Basic,
-                7f,
-                0.2f,
-                10f,
-                0f,
-                8f);
-            var resolver = new ProjectileImpactResolver(ability, null, source, ~0, null);
+                damage: 7f,
+                range: 10f,
+                projectileSpeed: 8f);
+            var resolver = new ProjectileImpactResolver(effect, null, source, ~0, null);
 
             try
             {
@@ -76,7 +64,7 @@ namespace Shooter.Tests.Projectiles
             finally
             {
                 Object.DestroyImmediate(source);
-                Object.DestroyImmediate(ability);
+                Object.DestroyImmediate(effect);
             }
         }
     }

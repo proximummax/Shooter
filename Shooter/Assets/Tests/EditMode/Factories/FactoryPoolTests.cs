@@ -31,18 +31,18 @@ namespace Shooter.Tests.Factories
                     id: "default-projectile",
                     projectilePrefab: prefab,
                     hitParticlePrefab: hitPrefab);
+                ProjectileAbilityEffectDefinition effect = ProjectileAbilityEffectDefinition.CreateRuntime(
+                    DamageType.Basic,
+                    damage: 10f,
+                    range: 10f,
+                    projectileSpeed: 8f,
+                    projectileDefinition);
                 AbilityDefinition definition = AbilityDefinition.CreateRuntime(
                     "basic",
                     "Basic Shot",
                     "Projectile.",
-                    AbilityType.Projectile,
-                    DamageType.Basic,
-                    10f,
-                    0.2f,
-                    10f,
-                    0f,
-                    8f,
-                    projectileDefinition);
+                    cooldown: 0.2f,
+                    effect);
                 var hitFactory = new HitParticleFactory(particlesParent);
                 var factory = new ProjectileFactory(parent, hitFactory);
 
@@ -84,30 +84,30 @@ namespace Shooter.Tests.Factories
             {
                 ProjectileDefinition firstProjectile = ProjectileDefinition.CreateRuntime("first", firstPrefab, hitPrefab);
                 ProjectileDefinition secondProjectile = ProjectileDefinition.CreateRuntime("second", secondPrefab, hitPrefab);
+                ProjectileAbilityEffectDefinition firstEffect = ProjectileAbilityEffectDefinition.CreateRuntime(
+                    DamageType.Basic,
+                    damage: 10f,
+                    range: 10f,
+                    projectileSpeed: 8f,
+                    firstProjectile);
+                ProjectileAbilityEffectDefinition secondEffect = ProjectileAbilityEffectDefinition.CreateRuntime(
+                    DamageType.Basic,
+                    damage: 10f,
+                    range: 10f,
+                    projectileSpeed: 8f,
+                    secondProjectile);
                 AbilityDefinition firstAbility = AbilityDefinition.CreateRuntime(
                     "first-shot",
                     "First Shot",
                     "Projectile.",
-                    AbilityType.Projectile,
-                    DamageType.Basic,
-                    10f,
-                    0.2f,
-                    10f,
-                    0f,
-                    8f,
-                    firstProjectile);
+                    cooldown: 0.2f,
+                    firstEffect);
                 AbilityDefinition secondAbility = AbilityDefinition.CreateRuntime(
                     "second-shot",
                     "Second Shot",
                     "Projectile.",
-                    AbilityType.Projectile,
-                    DamageType.Basic,
-                    10f,
-                    0.2f,
-                    10f,
-                    0f,
-                    8f,
-                    secondProjectile);
+                    cooldown: 0.2f,
+                    secondEffect);
                 var factory = new ProjectileFactory(parent, new HitParticleFactory(particlesParent));
 
                 Projectile first = factory.Create(firstAbility, source, Vector3.forward, ~0, Vector3.zero);

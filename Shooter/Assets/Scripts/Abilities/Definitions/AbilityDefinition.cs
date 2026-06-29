@@ -1,6 +1,4 @@
 using System;
-using Shooter.Combat;
-using Shooter.Projectiles;
 using UnityEngine;
 
 namespace Shooter.Abilities
@@ -21,18 +19,19 @@ namespace Shooter.Abilities
         public AbilityType Type => _effect != null ? _effect.Type : AbilityType.Projectile;
         public float Cooldown => _cooldown;
         public AbilityEffectDefinition Effect => _effect;
-        public DamageType DamageType => DamageEffect != null ? DamageEffect.DamageType : DamageType.Basic;
-        public float Damage => DamageEffect != null ? DamageEffect.Damage : 0f;
-        public float Range => ProjectileEffect != null ? ProjectileEffect.Range : 0f;
-        public float Radius => AreaDamageEffect != null ? AreaDamageEffect.Radius : 0f;
-        public float ProjectileSpeed => ProjectileEffect != null ? ProjectileEffect.ProjectileSpeed : 0f;
-        public ProjectileDefinition Projectile => ProjectileEffect != null ? ProjectileEffect.Projectile : null;
-        public ProjectileAbilityEffectDefinition ProjectileEffect => _effect as ProjectileAbilityEffectDefinition;
-        public AreaDamageAbilityEffectDefinition AreaDamageEffect => _effect as AreaDamageAbilityEffectDefinition;
-        public DashAbilityEffectDefinition DashEffect => _effect as DashAbilityEffectDefinition;
         public Sprite Icon => _icon;
 
-        private IDamageAbilityEffect DamageEffect => _effect as IDamageAbilityEffect;
+        public TEffect GetEffect<TEffect>() where TEffect : AbilityEffectDefinition
+        {
+            if (_effect is TEffect typedEffect)
+            {
+                return typedEffect;
+            }
+
+            string actualType = _effect != null ? _effect.GetType().Name : "none";
+            throw new InvalidOperationException(
+                $"Ability '{_id}' requires effect '{typeof(TEffect).Name}', but has '{actualType}'.");
+        }
 
         public static AbilityDefinition CreateRuntime(
             string id,
@@ -48,36 +47,6 @@ namespace Shooter.Abilities
             definition._cooldown = Mathf.Max(0f, cooldown);
             definition._effect = effect;
             return definition;
-        }
-
-        public static AbilityDefinition CreateRuntime(
-            string id,
-            string displayName,
-            string description,
-            AbilityType type,
-            DamageType damageType,
-            float damage,
-            float cooldown,
-            float range,
-            float radius,
-            float projectileSpeed,
-            ProjectileDefinition projectile = null)
-        {
-            AbilityEffectDefinition effect;
-            if (type == AbilityType.Projectile)
-            {
-                effect = ProjectileAbilityEffectDefinition.CreateRuntime(damageType, damage, range, projectileSpeed, projectile);
-            }
-            else if (type == AbilityType.AreaDamage)
-            {
-                effect = AreaDamageAbilityEffectDefinition.CreateRuntime(damageType, damage, radius);
-            }
-            else
-            {
-                throw new InvalidOperationException($"Use a typed effect definition to create runtime ability type '{type}'.");
-            }
-
-            return CreateRuntime(id, displayName, description, cooldown, effect);
         }
     }
 }

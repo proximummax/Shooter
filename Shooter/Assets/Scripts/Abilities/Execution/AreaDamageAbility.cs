@@ -8,13 +8,13 @@ namespace Shooter.Abilities
         private const int MaxOverlapHits = 64;
         private static readonly Collider[] OverlapHits = new Collider[MaxOverlapHits];
         private static readonly HealthComponent[] DamagedTargets = new HealthComponent[MaxOverlapHits];
-        private readonly AbilityDefinition _definition;
+        private readonly AreaDamageAbilityEffectDefinition _effect;
         private readonly DamagePipeline _pipeline;
         private readonly int _damageLayerMask;
 
         public AreaDamageAbility(AbilityDefinition definition, DamagePipeline pipeline, int damageLayerMask)
         {
-            _definition = definition;
+            _effect = definition.GetEffect<AreaDamageAbilityEffectDefinition>();
             _pipeline = pipeline ?? DamagePipeline.Default;
             _damageLayerMask = damageLayerMask;
         }
@@ -23,7 +23,7 @@ namespace Shooter.Abilities
         {
             int hitCount = Physics.OverlapSphereNonAlloc(
                 context.Caster.position,
-                _definition.Radius,
+                _effect.Radius,
                 OverlapHits,
                 _damageLayerMask,
                 QueryTriggerInteraction.Ignore);
@@ -40,8 +40,8 @@ namespace Shooter.Abilities
                 DamagedTargets[damagedCount] = health;
                 damagedCount++;
                 health.ApplyDamage(new DamageRequest(
-                    baseAmount: _definition.Damage,
-                    damageType: _definition.DamageType,
+                    baseAmount: _effect.Damage,
+                    damageType: _effect.DamageType,
                     source: context.Caster.gameObject,
                     target: health));
             }

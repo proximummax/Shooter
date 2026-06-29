@@ -102,13 +102,12 @@ namespace Shooter.Composition
                 throw new InvalidOperationException($"{owner} ability '{ability.Id}' must reference an ability effect.");
             }
 
-            if (ability.Type == AbilityType.Projectile)
+            if (ability.Effect is ProjectileAbilityEffectDefinition projectileEffect)
             {
-                RequireValidProjectile(ability.Projectile, $"{owner} ability '{ability.Id}'");
+                RequireValidProjectile(projectileEffect.Projectile, $"{owner} ability '{ability.Id}'");
             }
 
-            DashAbilityEffectDefinition dashEffect = ability.DashEffect;
-            if (ability.Type == AbilityType.Dash && (dashEffect == null || dashEffect.Distance <= 0f))
+            if (ability.Effect is DashAbilityEffectDefinition dashEffect && dashEffect.Distance <= 0f)
             {
                 throw new InvalidOperationException($"{owner} ability '{ability.Id}' dash distance must be greater than zero.");
             }

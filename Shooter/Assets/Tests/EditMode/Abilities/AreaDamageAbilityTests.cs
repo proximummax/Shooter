@@ -10,17 +10,16 @@ namespace Shooter.Tests.Abilities
         [Test]
         public void Execute_DamagesOnlyTargetsInsideRadius()
         {
+            AreaDamageAbilityEffectDefinition effect = AreaDamageAbilityEffectDefinition.CreateRuntime(
+                DamageType.Ability,
+                damage: 20f,
+                radius: 2f);
             AbilityDefinition definition = AbilityDefinition.CreateRuntime(
                 id: "aoe",
                 displayName: "AoE Impulse",
                 description: "Deals area damage.",
-                type: AbilityType.AreaDamage,
-                damageType: DamageType.Ability,
-                damage: 20f,
                 cooldown: 3f,
-                range: 0f,
-                radius: 2f,
-                projectileSpeed: 0f);
+                effect);
             var source = new GameObject("source");
             GameObject nearTarget = CreateTarget("near-target", new Vector3(1f, 0f, 0f));
             GameObject farTarget = CreateTarget("far-target", new Vector3(5f, 0f, 0f));
@@ -40,6 +39,8 @@ namespace Shooter.Tests.Abilities
                 Object.DestroyImmediate(source);
                 Object.DestroyImmediate(nearTarget);
                 Object.DestroyImmediate(farTarget);
+                Object.DestroyImmediate(definition);
+                Object.DestroyImmediate(effect);
             }
         }
 

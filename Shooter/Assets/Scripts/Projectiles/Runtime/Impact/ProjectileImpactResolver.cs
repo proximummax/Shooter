@@ -7,20 +7,20 @@ namespace Shooter.Projectiles
 {
     public sealed class ProjectileImpactResolver
     {
-        private readonly AbilityDefinition _ability;
+        private readonly ProjectileAbilityEffectDefinition _effect;
         private readonly ProjectileDefinition _projectile;
         private readonly GameObject _source;
         private readonly int _damageLayerMask;
         private readonly IHitParticleFactory _hitParticleFactory;
 
         public ProjectileImpactResolver(
-            AbilityDefinition ability,
+            ProjectileAbilityEffectDefinition effect,
             ProjectileDefinition projectile,
             GameObject source,
             int damageLayerMask,
             IHitParticleFactory hitParticleFactory)
         {
-            _ability = ability;
+            _effect = effect;
             _projectile = projectile;
             _source = source;
             _damageLayerMask = damageLayerMask;
@@ -30,7 +30,7 @@ namespace Shooter.Projectiles
         public bool TryResolve(ProjectileImpactContext context)
         {
             Collider other = context.Collider;
-            if (_ability == null || other == null || other.gameObject == _source || ((_damageLayerMask & (1 << other.gameObject.layer)) == 0))
+            if (_effect == null || other == null || other.gameObject == _source || ((_damageLayerMask & (1 << other.gameObject.layer)) == 0))
             {
                 return false;
             }
@@ -42,8 +42,8 @@ namespace Shooter.Projectiles
             }
 
             health.ApplyDamage(new DamageRequest(
-                baseAmount: _ability.Damage,
-                damageType: _ability.DamageType,
+                baseAmount: _effect.Damage,
+                damageType: _effect.DamageType,
                 source: _source,
                 target: health));
 

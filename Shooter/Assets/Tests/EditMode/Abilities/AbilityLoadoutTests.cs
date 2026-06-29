@@ -16,17 +16,16 @@ namespace Shooter.Tests.Abilities
             target.transform.position = Vector3.right;
             HealthComponent targetHealth = target.AddComponent<HealthComponent>();
             targetHealth.Initialize(100f, 0f, DamagePipeline.Default);
+            AreaDamageAbilityEffectDefinition effect = AreaDamageAbilityEffectDefinition.CreateRuntime(
+                DamageType.Ability,
+                damage: 20f,
+                radius: 3f);
             AbilityDefinition areaDamage = AbilityDefinition.CreateRuntime(
                 "active",
                 "Active",
                 "Active area attack.",
-                AbilityType.AreaDamage,
-                DamageType.Ability,
-                20f,
-                2f,
-                0f,
-                3f,
-                0f);
+                cooldown: 2f,
+                effect);
             AbilityLoadoutDefinition loadoutDefinition = AbilityLoadoutDefinition.CreateRuntime(
                 "starter",
                 "Starter",
@@ -53,6 +52,7 @@ namespace Shooter.Tests.Abilities
                 Object.DestroyImmediate(caster);
                 Object.DestroyImmediate(target);
                 Object.DestroyImmediate(areaDamage);
+                Object.DestroyImmediate(effect);
             }
         }
 
